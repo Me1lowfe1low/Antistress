@@ -8,16 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var bubbleSet = BubbleViewModel(elements: 16)
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 70 ))]) {
+                ForEach(0..<bubbleSet.elements, id: \.self) { bubbleID in
+                                BubbleView(bubble: $bubbleSet.array[bubbleID])
+                            }
+                        }
+                        .padding(.horizontal)
+                        .scaledToFit()
+            Button(action: {
+                bubbleSet.repair()
+                print("Bubbles should be set to initial state")
+            }, label: {
+                Text("Refresh")
+                
+            })
+            .padding()
+            .overlay(
+                    Capsule()
+                        .stroke(.gray, lineWidth: 5)
+                    )   
         }
         .padding()
     }
 }
+    
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
