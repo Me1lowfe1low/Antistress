@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var bubbleSet = BubbleViewModel(elements: 16)
+    @StateObject var player: AudioExtension = AudioExtension(path: "Pop.wav")
     
     var body: some View {
         VStack {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 70 ))]) {
                 ForEach(0..<bubbleSet.elements, id: \.self) { bubbleID in
                                 BubbleView(bubble: $bubbleSet.array[bubbleID])
+                                    .environmentObject(player)
                             }
                         }
                         .padding(.horizontal)
