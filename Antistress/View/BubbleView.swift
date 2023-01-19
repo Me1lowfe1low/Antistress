@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BubbleView: View {
     @Binding var bubble: Bubble
-    @State var player: AudioExtension = AudioExtension(path: "Pop.wav")
+    //@State var player: AudioExtension = AudioExtension(path: "Pop.wav")
+    @EnvironmentObject var player: AudioExtension
     
     var body: some View {
         VStack {
